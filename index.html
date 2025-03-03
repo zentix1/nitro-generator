@@ -127,8 +127,24 @@
       margin: 1rem 0;
     }
 
-    .verification-task button {
-      margin: 0.25rem;
+    .verification-task input {
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin: 0.5rem 0;
+    }
+
+    /* Quantity Selector */
+    .quantity-selector {
+      margin: 1rem 0;
+    }
+
+    .quantity-selector input {
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 60px;
+      text-align: center;
     }
 
     /* Popup Notifications */
@@ -189,16 +205,20 @@
   <div class="container">
     <h1>Fake Nitro Generator</h1>
     <div class="code-display" id="codeDisplay">Click Generate to Start</div>
+    <div class="quantity-selector">
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" min="1" max="10" value="1">
+    </div>
     <button class="btn" id="generateBtn" onclick="startVerification()">Generate Code</button>
     <div class="progress-bar">
       <div class="progress-bar-inner" id="progressBar"></div>
     </div>
     <div class="verification" id="verification">
       <div class="verification-task" id="verificationTask">
-        <p>Complete the task to generate a code:</p>
-        <button onclick="completeTask(1)">Click Me</button>
-        <button onclick="completeTask(2)">Click Me</button>
-        <button onclick="completeTask(3)">Click Me</button>
+        <p>Complete the CAPTCHA to generate codes:</p>
+        <div id="captcha"></div>
+        <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
+        <button onclick="validateCaptcha()">Submit</button>
       </div>
     </div>
     <div id="popup" class="popup"></div>
@@ -209,6 +229,7 @@
     // Variables
     let generatedCodes = 0;
     let isGenerating = false;
+    let captchaValue = '';
 
     // Generate a fake Nitro code
     function generateCode() {
@@ -222,44 +243,57 @@
     }
 
     // Display the generated code
-    function displayCode() {
+    function displayCode(quantity) {
       const codeDisplay = document.getElementById('codeDisplay');
-      const code = generateCode();
-      codeDisplay.textContent = code;
-      generatedCodes++;
-      showPopup('Code generated successfully!');
+      let codes = '';
+      for (let i = 0; i < quantity; i++) {
+        codes += generateCode() + '<br>';
+      }
+      codeDisplay.innerHTML = codes;
+      generatedCodes += quantity;
+      showPopup(`${quantity} code(s) generated successfully!`);
       triggerConfetti();
     }
 
     // Start the verification process
     function startVerification() {
       if (isGenerating) return;
+      generateCaptcha();
       const verification = document.getElementById('verification');
       verification.classList.add('active');
       document.getElementById('generateBtn').disabled = true;
     }
 
-    // Complete the verification task
-    let tasksCompleted = 0;
-    function completeTask(taskNumber) {
-      tasksCompleted++;
-      if (tasksCompleted === 3) {
-        document.getElementById('verification').classList.remove('active');
-        startCodeGeneration();
+    // Generate CAPTCHA
+    function generateCaptcha() {
+      const captchaContainer = document.getElementById('captcha');
+      captchaValue = Math.random().toString(36).substring(2, 8).toUpperCase();
+      captchaContainer.textContent = captchaValue;
+    }
+
+    // Validate CAPTCHA
+    function validateCaptcha() {
+      const userInput = document.getElementById('captchaInput').value;
+      if (userInput.toUpperCase() === captchaValue) {
+        const quantity = parseInt(document.getElementById('quantity').value);
+        startCodeGeneration(quantity);
+      } else {
+        showPopup('Invalid CAPTCHA. Try again!');
+        generateCaptcha();
       }
     }
 
     // Start code generation with a progress bar
-    function startCodeGeneration() {
+    function startCodeGeneration(quantity) {
       isGenerating = true;
       const progressBar = document.getElementById('progressBar');
       progressBar.style.width = '100%';
       setTimeout(() => {
         progressBar.style.width = '0';
-        displayCode();
+        displayCode(quantity);
         isGenerating = false;
         document.getElementById('generateBtn').disabled = false;
-        tasksCompleted = 0;
+        document.getElementById('verification').classList.remove('active');
       }, 3000);
     }
 
