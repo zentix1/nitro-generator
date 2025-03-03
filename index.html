@@ -1,326 +1,1020 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fake Discord Nitro Generator</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    /* General Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Nitro Generator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            /* Light Theme Colors */
+            --primary-light: #5865f2;
+            --secondary-light: #eb459e;
+            --background-light: #f6f6f7;
+            --card-bg-light: rgba(255, 255, 255, 0.7);
+            --text-light: #2e3338;
+            --border-light: rgba(0, 0, 0, 0.1);
+            
+            /* Dark Theme Colors */
+            --primary-dark: #5865f2;
+            --secondary-dark: #eb459e;
+            --background-dark: #36393f;
+            --card-bg-dark: rgba(32, 34, 37, 0.7);
+            --text-dark: #dcddde;
+            --border-dark: rgba(255, 255, 255, 0.1);
+            
+            /* Common Colors */
+            --success: #57f287;
+            --warning: #fee75c;
+            --danger: #ed4245;
+            
+            /* Current Theme Colors (will be updated by JS) */
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --background: var(--background-dark);
+            --card-bg: var(--card-bg-dark);
+            --text: var(--text-dark);
+            --border: var(--border-dark);
+        }
 
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #2a2a40);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow: hidden;
-    }
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    /* Container */
-    .container {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 2rem;
-      width: 90%;
-      max-width: 500px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-      position: relative;
-    }
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
 
-    /* Neon Text */
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5rem;
-      background: linear-gradient(90deg, #00ffff, #ff00ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 1rem;
-    }
+        /* ===== BACKGROUND ANIMATION ===== */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
 
-    /* Buttons */
-    .btn {
-      background: linear-gradient(90deg, #00ffff, #ff00ff);
-      border: none;
-      color: #fff;
-      padding: 0.75rem 1.5rem;
-      border-radius: 25px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin: 0.5rem;
-    }
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, transparent 20%, var(--background) 70%),
+                        linear-gradient(to right, var(--primary), var(--secondary));
+            opacity: 0.1;
+            animation: bgRotate 20s linear infinite;
+        }
 
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.6), 0 0 15px rgba(255, 0, 255, 0.6);
-    }
+        @keyframes bgRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
-    /* Code Display */
-    .code-display {
-      background: rgba(0, 0, 0, 0.3);
-      padding: 1rem;
-      border-radius: 10px;
-      margin: 1rem 0;
-      font-size: 1.2rem;
-      font-weight: bold;
-      letter-spacing: 2px;
-      position: relative;
-    }
+        /* ===== CONTAINER STYLES ===== */
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
 
-    .code-display::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      animation: shine 2s infinite;
-    }
+        /* ===== HEADER STYLES ===== */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
 
-    @keyframes shine {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(88, 101, 242, 0.3);
+            animation: pulse 2s infinite;
+        }
 
-    /* Progress Bar */
-    .progress-bar {
-      width: 100%;
-      height: 10px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 5px;
-      overflow: hidden;
-      margin: 1rem 0;
-    }
+        @keyframes pulse {
+            0% {
+                text-shadow: 0 0 10px rgba(88, 101, 242, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(88, 101, 242, 0.5);
+            }
+            100% {
+                text-shadow: 0 0 10px rgba(88, 101, 242, 0.3);
+            }
+        }
 
-    .progress-bar-inner {
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg, #00ffff, #ff00ff);
-      transition: width 3s ease;
-    }
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
 
-    /* Verification System */
-    .verification {
-      display: none;
-      margin-top: 1rem;
-    }
+        /* ===== THEME TOGGLE ===== */
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
 
-    .verification.active {
-      display: block;
-    }
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
 
-    .verification-task {
-      margin: 1rem 0;
-    }
+        /* ===== CARD STYLES ===== */
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-    .verification-task input {
-      padding: 0.5rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      margin: 0.5rem 0;
-    }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
 
-    /* Quantity Selector */
-    .quantity-selector {
-      margin: 1rem 0;
-    }
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-    .quantity-selector input {
-      padding: 0.5rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      width: 60px;
-      text-align: center;
-    }
+        /* ===== BUTTON STYLES ===== */
+        .btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
 
-    /* Popup Notifications */
-    .popup {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(0, 0, 0, 0.8);
-      color: #fff;
-      padding: 0.75rem 1.5rem;
-      border-radius: 5px;
-      display: none;
-      animation: slideIn 0.5s ease;
-    }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
 
-    @keyframes slideIn {
-      from { transform: translateX(100%); }
-      to { transform: translateX(0); }
-    }
+        .btn:hover::before {
+            left: 100%;
+        }
 
-    /* Confetti Effect */
-    .confetti {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-    }
+        .btn:hover {
+            box-shadow: 0 0 15px var(--primary);
+            transform: translateY(-2px);
+        }
 
-    .confetti-piece {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: #ff0;
-      animation: confetti 2s ease-out infinite;
-    }
+        .btn:active {
+            transform: translateY(0);
+        }
 
-    @keyframes confetti {
-      0% { transform: translateY(0) rotate(0); }
-      100% { transform: translateY(100vh) rotate(360deg); }
-    }
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
 
-    /* Responsive Design */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
-      }
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
 
-      .btn {
-        padding: 0.5rem 1rem;
-      }
-    }
-  </style>
+        /* ===== NITRO CODE DISPLAY ===== */
+        .nitro-code-container {
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .nitro-code {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            position: relative;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .nitro-code:hover {
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-container {
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        /* ===== STATS DISPLAY ===== */
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* ===== VERIFICATION SYSTEM ===== */
+        .verification-container {
+            display: none;
+            margin-top: 1.5rem;
+        }
+
+        .verification-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .verification-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .verification-box {
+            aspect-ratio: 1;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .verification-box:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .verification-box.selected {
+            background: var(--primary);
+            color: white;
+        }
+
+        .verification-question {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .verification-input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .verification-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.3);
+        }
+
+        /* ===== NOTIFICATION SYSTEM ===== */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .notification {
+            background: var(--card-bg);
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateX(120%);
+            animation: slideIn 0.3s forwards, fadeOut 0.3s 2.7s forwards;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+        }
+
+        .notification.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .notification.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .notification.info {
+            border-left: 4px solid var(--primary);
+        }
+
+        .notification-icon {
+            font-size: 1.2rem;
+        }
+
+        .notification.success .notification-icon {
+            color: var(--success);
+        }
+
+        .notification.error .notification-icon {
+            color: var(--danger);
+        }
+
+        .notification.info .notification-icon {
+            color: var(--primary);
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateX(120%);
+            }
+        }
+
+        /* ===== CONFETTI EFFECT ===== */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            opacity: 0.8;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* ===== FOOTER STYLES ===== */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        footer .heart {
+            color: var(--danger);
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* ===== RESPONSIVE STYLES ===== */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem auto;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+            
+            .nitro-code {
+                font-size: 0.9rem;
+                padding: 0.75rem;
+                padding-right: 40px;
+            }
+            
+            .verification-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Fake Nitro Generator</h1>
-    <div class="code-display" id="codeDisplay">Click Generate to Start</div>
-    <div class="quantity-selector">
-      <label for="quantity">Quantity:</label>
-      <input type="number" id="quantity" min="1" max="10" value="1">
+    <!-- Background Animation -->
+    <div class="bg-animation"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1 class="logo">Discord Nitro Generator</h1>
+            <p class="subtitle">Generate unlimited Discord Nitro gift codes</p>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Generator Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-gift"></i>
+                    Nitro Code Generator
+                </h2>
+                
+                <!-- Nitro Code Display -->
+                <div class="nitro-code-container">
+                    <div class="nitro-code" id="nitroCode">
+                        Click the button below to generate a code
+                    </div>
+                    <button class="copy-btn" id="copyBtn" title="Copy to clipboard">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                
+                <!-- Generate Button -->
+                <button class="btn btn-block" id="generateBtn">
+                    <i class="fas fa-bolt"></i>
+                    Generate Nitro Code
+                </button>
+                
+                <!-- Stats Display -->
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="generatedCount">0</div>
+                        <div class="stat-label">Generated</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="cooldownTimer">0s</div>
+                        <div class="stat-label">Cooldown</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Verification System -->
+            <div class="card verification-container" id="verificationContainer">
+                <h2 class="card-title">
+                    <i class="fas fa-shield-alt"></i>
+                    Human Verification
+                </h2>
+                
+                <p class="verification-title">Complete the verification to reveal your Nitro code</p>
+                
+                <!-- Box Verification -->
+                <div class="verification-grid" id="boxVerification">
+                    <div class="verification-box" data-index="0"></div>
+                    <div class="verification-box" data-index="1"></div>
+                    <div class="verification-box" data-index="2"></div>
+                    <div class="verification-box" data-index="3"></div>
+                    <div class="verification-box" data-index="4"></div>
+                    <div class="verification-box" data-index="5"></div>
+                    <div class="verification-box" data-index="6"></div>
+                    <div class="verification-box" data-index="7"></div>
+                    <div class="verification-box" data-index="8"></div>
+                </div>
+                
+                <!-- Question Verification -->
+                <div id="questionVerification" style="display: none;">
+                    <p class="verification-question" id="verificationQuestion"></p>
+                    <input type="text" class="verification-input" id="verificationAnswer" placeholder="Your answer...">
+                </div>
+                
+                <!-- Verify Button -->
+                <button class="btn btn-block" id="verifyBtn">
+                    <i class="fas fa-check-circle"></i>
+                    Verify
+                </button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            Made with <span class="heart">❤</span> by Discord Nitro Generator
+        </footer>
     </div>
-    <button class="btn" id="generateBtn" onclick="startVerification()">Generate Code</button>
-    <div class="progress-bar">
-      <div class="progress-bar-inner" id="progressBar"></div>
-    </div>
-    <div class="verification" id="verification">
-      <div class="verification-task" id="verificationTask">
-        <p>Complete the CAPTCHA to generate codes:</p>
-        <div id="captcha"></div>
-        <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
-        <button onclick="validateCaptcha()">Submit</button>
-      </div>
-    </div>
-    <div id="popup" class="popup"></div>
-    <div class="confetti" id="confetti"></div>
-  </div>
 
-  <script>
-    // Variables
-    let generatedCodes = 0;
-    let isGenerating = false;
-    let captchaValue = '';
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+    
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confettiContainer"></div>
 
-    // Generate a fake Nitro code
-    function generateCode() {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      let code = 'https://discord.gift/';
-      for (let i = 0; i < 16; i++) {
-        code += chars[Math.floor(Math.random() * chars.length)];
-        if (i === 4 || i === 9) code += '-';
-      }
-      return code;
-    }
+    <script>
+        // ===== DOM ELEMENTS =====
+        const themeToggle = document.getElementById('themeToggle');
+        const nitroCode = document.getElementById('nitroCode');
+        const copyBtn = document.getElementById('copyBtn');
+        const generateBtn = document.getElementById('generateBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const generatedCount = document.getElementById('generatedCount');
+        const cooldownTimer = document.getElementById('cooldownTimer');
+        const verificationContainer = document.getElementById('verificationContainer');
+        const boxVerification = document.getElementById('boxVerification');
+        const questionVerification = document.getElementById('questionVerification');
+        const verificationQuestion = document.getElementById('verificationQuestion');
+        const verificationAnswer = document.getElementById('verificationAnswer');
+        const verifyBtn = document.getElementById('verifyBtn');
+        const notificationContainer = document.getElementById('notificationContainer');
+        const confettiContainer = document.getElementById('confettiContainer');
 
-    // Display the generated code
-    function displayCode(quantity) {
-      const codeDisplay = document.getElementById('codeDisplay');
-      let codes = '';
-      for (let i = 0; i < quantity; i++) {
-        codes += generateCode() + '<br>';
-      }
-      codeDisplay.innerHTML = codes;
-      generatedCodes += quantity;
-      showPopup(`${quantity} code(s) generated successfully!`);
-      triggerConfetti();
-    }
+        // ===== STATE VARIABLES =====
+        let isDarkMode = true; // Default to dark mode
+        let isGenerating = false;
+        let cooldownActive = false;
+        let cooldownSeconds = 0;
+        let cooldownInterval;
+        let generatedCodesCount = 0;
+        let currentCode = '';
+        let verificationMode = '';
+        let verificationTarget = [];
+        let selectedBoxes = [];
+        
+        // ===== INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize theme
+            updateTheme();
+            
+            // Add event listeners
+            themeToggle.addEventListener('click', toggleTheme);
+            generateBtn.addEventListener('click', startGeneration);
+            copyBtn.addEventListener('click', copyToClipboard);
+            verifyBtn.addEventListener('click', verifyHuman);
+            
+            // Initialize box verification
+            const verificationBoxes = document.querySelectorAll('.verification-box');
+            verificationBoxes.forEach(box => {
+                box.addEventListener('click', () => toggleBox(box));
+            });
+        });
 
-    // Start the verification process
-    function startVerification() {
-      if (isGenerating) return;
-      generateCaptcha();
-      const verification = document.getElementById('verification');
-      verification.classList.add('active');
-      document.getElementById('generateBtn').disabled = true;
-    }
+        // ===== THEME FUNCTIONS =====
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            updateTheme();
+        }
 
-    // Generate CAPTCHA
-    function generateCaptcha() {
-      const captchaContainer = document.getElementById('captcha');
-      captchaValue = Math.random().toString(36).substring(2, 8).toUpperCase();
-      captchaContainer.textContent = captchaValue;
-    }
+        function updateTheme() {
+            const root = document.documentElement;
+            
+            if (isDarkMode) {
+                root.style.setProperty('--primary', 'var(--primary-dark)');
+                root.style.setProperty('--secondary', 'var(--secondary-dark)');
+                root.style.setProperty('--background', 'var(--background-dark)');
+                root.style.setProperty('--card-bg', 'var(--card-bg-dark)');
+                root.style.setProperty('--text', 'var(--text-dark)');
+                root.style.setProperty('--border', 'var(--border-dark)');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                root.style.setProperty('--primary', 'var(--primary-light)');
+                root.style.setProperty('--secondary', 'var(--secondary-light)');
+                root.style.setProperty('--background', 'var(--background-light)');
+                root.style.setProperty('--card-bg', 'var(--card-bg-light)');
+                root.style.setProperty('--text', 'var(--text-light)');
+                root.style.setProperty('--border', 'var(--border-light)');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        }
 
-    // Validate CAPTCHA
-    function validateCaptcha() {
-      const userInput = document.getElementById('captchaInput').value;
-      if (userInput.toUpperCase() === captchaValue) {
-        const quantity = parseInt(document.getElementById('quantity').value);
-        startCodeGeneration(quantity);
-      } else {
-        showPopup('Invalid CAPTCHA. Try again!');
-        generateCaptcha();
-      }
-    }
+        // ===== NITRO CODE GENERATION =====
+        function startGeneration() {
+            if (isGenerating || cooldownActive) return;
+            
+            isGenerating = true;
+            generateBtn.disabled = true;
+            nitroCode.textContent = 'Generating...';
+            
+            // Show and animate progress bar
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+            
+            // Animate progress bar
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 2;
+                progressBar.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    finishGeneration();
+                }
+            }, 30); // 50 steps * 30ms = ~1.5 seconds
+        }
 
-    // Start code generation with a progress bar
-    function startCodeGeneration(quantity) {
-      isGenerating = true;
-      const progressBar = document.getElementById('progressBar');
-      progressBar.style.width = '100%';
-      setTimeout(() => {
-        progressBar.style.width = '0';
-        displayCode(quantity);
-        isGenerating = false;
-        document.getElementById('generateBtn').disabled = false;
-        document.getElementById('verification').classList.remove('active');
-      }, 3000);
-    }
+        function finishGeneration() {
+            // Hide progress bar
+            setTimeout(() => {
+                progressContainer.style.display = 'none';
+            }, 300);
+            
+            // Show verification
+            verificationContainer.style.display = 'block';
+            
+            // Scroll to verification
+            verificationContainer.scrollIntoView({ behavior: 'smooth' });
+            
+            // Set up verification
+            setupVerification();
+            
+            // Generate the actual code (but don't show it yet)
+            currentCode = generateNitroCode();
+            
+            isGenerating = false;
+        }
 
-    // Show popup notifications
-    function showPopup(message) {
-      const popup = document.getElementById('popup');
-      popup.textContent = message;
-      popup.style.display = 'block';
-      setTimeout(() => {
-        popup.style.display = 'none';
-      }, 3000);
-    }
+        function generateNitroCode() {
+            // Format: https://discord.gift/X9YB7-TKZQP-84MV2
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            
+            // Generate 16 random characters
+            for (let i = 0; i < 16; i++) {
+                code += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            
+            // Format with hyphens (XXXXX-XXXXX-XXXXX)
+            code = code.substring(0, 5) + '-' + code.substring(5, 10) + '-' + code.substring(10, 15);
+            
+            return 'https://discord.gift/' + code;
+        }
 
-    // Trigger confetti effect
-    function triggerConfetti() {
-      const confettiContainer = document.getElementById('confetti');
-      for (let i = 0; i < 50; i++) {
-        const confetti = document.createElement('div');
-        confetti.classList.add('confetti-piece');
-        confetti.style.left = `${Math.random() * 100}%`;
-        confetti.style.animationDelay = `${Math.random()}s`;
-        confettiContainer.appendChild(confetti);
-      }
-      setTimeout(() => {
-        confettiContainer.innerHTML = '';
-      }, 2000);
-    }
-  </script>
+        function revealGeneratedCode() {
+            // Update the code display
+            nitroCode.textContent = currentCode;
+            
+            // Update stats
+            generatedCodesCount++;
+            generatedCount.textContent = generatedCodesCount;
+            
+            // Hide verification
+            verificationContainer.style.display = 'none';
+            
+            // Start cooldown
+            startCooldown();
+            
+            // Show success notification
+            showNotification('Code generated successfully!', 'success');
+            
+            // Create confetti effect
+            createConfetti();
+            
+            // Scroll back to the code
+            nitroCode.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function startCooldown() {
+            cooldownActive = true;
+            cooldownSeconds = 5; // 5 second cooldown
+            cooldownTimer.textContent = cooldownSeconds + 's';
+            
+            cooldownInterval = setInterval(() => {
+                cooldownSeconds--;
+                cooldownTimer.textContent = cooldownSeconds + 's';
+                
+                if (cooldownSeconds <= 0) {
+                    clearInterval(cooldownInterval);
+                    cooldownActive = false;
+                    generateBtn.disabled = false;
+                    cooldownTimer.textContent = '0s';
+                }
+            }, 1000);
+        }
+
+        // ===== VERIFICATION SYSTEM =====
+        function setupVerification() {
+            // Reset previous verification
+            selectedBoxes = [];
+            
+            // Randomly choose verification type
+            const verificationTypes = ['boxes', 'question'];
+            verificationMode = verificationTypes[Math.floor(Math.random() * verificationTypes.length)];
+            
+            if (verificationMode === 'boxes') {
+                // Box verification
+                boxVerification.style.display = 'grid';
+                questionVerification.style.display = 'none';
+                
+                // Reset boxes
+                const boxes = document.querySelectorAll('.verification-box');
+                boxes.forEach(box => {
+                    box.classList.remove('selected');
+                    box.innerHTML = '';
+                });
+                
+                // Randomly select 3 boxes to click
+                verificationTarget = [];
+                while (verificationTarget.length < 3) {
+                    const randomIndex = Math.floor(Math.random() * 9);
+                    if (!verificationTarget.includes(randomIndex)) {
+                        verificationTarget.push(randomIndex);
+                    }
+                }
+                
+                // Add icons to target boxes
+                verificationTarget.forEach(index => {
+                    boxes[index].innerHTML = '<i class="fas fa-robot"></i>';
+                });
+            } else {
+                // Question verification
+                boxVerification.style.display = 'none';
+                questionVerification.style.display = 'block';
+                
+                // Generate a simple math question
+                const num1 = Math.floor(Math.random() * 10) + 1;
+                const num2 = Math.floor(Math.random() * 10) + 1;
+                verificationQuestion.textContent = `What is ${num1} + ${num2}?`;
+                verificationTarget = [num1 + num2]; // Store the answer
+                
+                // Clear previous answer
+                verificationAnswer.value = '';
+            }
+        }
+
+        function toggleBox(box) {
+            const index = parseInt(box.dataset.index);
+            
+            if (box.classList.contains('selected')) {
+                // Deselect
+                box.classList.remove('selected');
+                selectedBoxes = selectedBoxes.filter(i => i !== index);
+            } else {
+                // Select (max 3)
+                if (selectedBoxes.length < 3) {
+                    box.classList.add('selected');
+                    selectedBoxes.push(index);
+                }
+            }
+        }
+
+        function verifyHuman() {
+            let isVerified = false;
+            
+            if (verificationMode === 'boxes') {
+                // Check if selected boxes match target boxes
+                if (selectedBoxes.length === verificationTarget.length) {
+                    const allMatch = verificationTarget.every(target => selectedBoxes.includes(target));
+                    isVerified = allMatch;
+                }
+            } else {
+                // Check if answer is correct
+                const answer = parseInt(verificationAnswer.value);
+                isVerified = answer === verificationTarget[0];
+            }
+            
+            if (isVerified) {
+                showNotification('Verification successful!', 'success');
+                revealGeneratedCode();
+            } else {
+                showNotification('Verification failed. Please try again.', 'error');
+                setupVerification(); // Reset verification
+            }
+        }  'error');
+                setupVerification(); // Reset verification
+            }
+        }
+
+        // ===== CLIPBOARD FUNCTIONS =====
+        function copyToClipboard() {
+            if (!currentCode) return;
+            
+            navigator.clipboard.writeText(currentCode)
+                .then(() => {
+                    showNotification('Code copied to clipboard!', 'info');
+                })
+                .catch(() => {
+                    showNotification('Failed to copy code', 'error');
+                });
+        }
+
+        // ===== NOTIFICATION SYSTEM =====
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'error') icon = 'exclamation-circle';
+            
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${icon}"></i>
+                </div>
+                <div class="notification-message">${message}</div>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            // Remove notification after animation completes
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // ===== CONFETTI EFFECT =====
+        function createConfetti() {
+            const colors = ['#5865f2', '#eb459e', '#57f287', '#fee75c'];
+            
+            // Create 100 confetti pieces
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Random position
+                const left = Math.random() * 100;
+                confetti.style.left = `${left}%`;
+                
+                // Random color
+                const colorIndex = Math.floor(Math.random() * colors.length);
+                confetti.style.backgroundColor = colors[colorIndex];
+                
+                // Random shape
+                const shapes = ['circle', 'square', 'triangle'];
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                if (shape === 'circle') {
+                    confetti.style.borderRadius = '50%';
+                } else if (shape === 'triangle') {
+                    confetti.style.width = '0';
+                    confetti.style.height = '0';
+                    confetti.style.backgroundColor = 'transparent';
+                    confetti.style.borderLeft = '5px solid transparent';
+                    confetti.style.borderRight = '5px solid transparent';
+                    confetti.style.borderBottom = `10px solid ${colors[colorIndex]}`;
+                }
+                
+                // Random size
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                
+                // Random rotation
+                const rotation = Math.random() * 360;
+                confetti.style.transform = `rotate(${rotation}deg)`;
+                
+                // Animation duration
+                const duration = Math.random() * 3 + 2;
+                confetti.style.animationDuration = `${duration}s`;
+                
+                // Add to container
+                confettiContainer.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, duration * 1000);
+            }
+        }
+    </script>
 </body>
 </html>
