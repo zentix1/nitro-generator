@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Discord Account Lookup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #3498db;
-            --secondary: #2ecc71;
-            --background: #2c3e50;
-            --background-light: #34495e;
-            --text: #ecf0f1;
-            --text-muted: #bdc3c7;
-            --danger: #e74c3c;
-            --success: #27ae60;
-            --warning: #f39c12;
+            --primary: #5865F2;
+            --primary-dark: #4752C4;
+            --background: #36393F;
+            --background-light: #40444B;
+            --text: #FFFFFF;
+            --text-muted: #72767D;
+            --success: #43B581;
+            --danger: #F04747;
         }
 
         * {
@@ -26,748 +24,188 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--background);
             color: var(--text);
             line-height: 1.6;
-            min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 600px;
+            width: 100%;
+            background-color: var(--background-light);
+            border-radius: 8px;
             padding: 2rem;
-            flex-grow: 1;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
-        }
-
-        .subtitle {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-        }
-
-        .card {
-            background-color: var(--background-light);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-        }
-
-        .card-title i {
-            margin-right: 0.5rem;
-            font-size: 1.2em;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid var(--background);
-            background-color: rgba(0, 0, 0, 0.1);
-            color: var(--text);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
-            transition: all 0.6s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
-        }
-
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-
-        .result-area {
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--background-light);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .result-item {
-            margin-bottom: 0.5rem;
-            padding: 0.75rem;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            font-family: 'Roboto Mono', monospace;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .result-item:hover {
-            background-color: rgba(52, 152, 219, 0.2);
-            transform: translateX(5px);
-        }
-
-        .result-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .copy-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .copy-btn:hover {
-            color: var(--primary);
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background-color: var(--background);
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 1rem;
-        }
-
-        .progress {
-            width: 0;
-            height: 100%;
-            background-color: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 1rem;
-        }
-
-        .stat-item {
             text-align: center;
-            background-color: rgba(0, 0, 0, 0.2);
-            padding: 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            flex: 1;
-            margin: 0 0.5rem;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 600;
             color: var(--primary);
+            margin-bottom: 1.5rem;
         }
 
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-        }
-
-        .tabs {
+        .input-group {
             display: flex;
             margin-bottom: 1rem;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            overflow: hidden;
         }
 
-        .tab {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            background-color: transparent;
-            color: var(--text-muted);
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 0.5rem;
+            font-size: 1rem;
             border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .tab:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .tab.active {
-            background-color: var(--primary);
-            color: #fff;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .settings-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
             background-color: var(--background);
-            transition: .4s;
-            border-radius: 34px;
+            color: var(--text);
+            border-radius: 4px 0 0 4px;
         }
 
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
+        button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            background-color: var(--primary);
+            color: var(--text);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        #result {
+            background-color: var(--background);
+            border-radius: 4px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
+            margin-right: 1rem;
         }
 
-        input:checked + .toggle-slider {
-            background-color: var(--primary);
+        .user-details h2 {
+            margin-bottom: 0.5rem;
         }
 
-        input:checked + .toggle-slider:before {
-            transform: translateX(26px);
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem;
-            background-color: var(--background-light);
-            color: var(--text);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .notification.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .notification.success {
-            background-color: var(--success);
-        }
-
-        .notification.error {
-            background-color: var(--danger);
-        }
-
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background-color: var(--background-light);
+        .user-details p {
+            margin: 0.25rem 0;
             color: var(--text-muted);
         }
 
-        .heart {
+        .error {
             color: var(--danger);
-            display: inline-block;
-            animation: heartbeat 1.5s infinite;
+            text-align: center;
         }
 
-        @keyframes heartbeat {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* Cool effect animations */
-        @keyframes glowing {
-            0% {
-                box-shadow: 0 0 5px var(--primary);
-            }
-            50% {
-                box-shadow: 0 0 20px var(--primary);
-            }
-            100% {
-                box-shadow: 0 0 5px var(--primary);
-            }
-        }
-
-        .glow-effect {
-            animation: glowing 2s infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
-        }
-
-        .float-effect {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-
-            .settings-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .stat-item {
-                margin: 0.5rem 0;
-            }
+        .loading {
+            text-align: center;
+            color: var(--text-muted);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1 class="float-effect">Advanced Generator</h1>
-            <p class="subtitle">Generate codes and accounts with advanced options</p>
-        </header>
-
-        <div class="card">
-            <div class="tabs">
-                <button class="tab active" data-tab="generator">Generator</button>
-                <button class="tab" data-tab="accounts">Accounts</button>
-                <button class="tab" data-tab="settings">Settings</button>
-            </div>
-
-            <div class="tab-content active" id="generator">
-                <h2 class="card-title"><i class="fas fa-code"></i> Code Generator</h2>
-                <div class="form-group">
-                    <label for="codeType">Code Type</label>
-                    <select id="codeType">
-                        <option value="standard">Standard</option>
-                        <option value="premium">Premium</option>
-                        <option value="promotional">Promotional</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="codeAmount">Number of Codes</label>
-                    <input type="number" id="codeAmount" min="1" max="100" value="10">
-                </div>
-                <button class="btn btn-block glow-effect" id="generateBtn">Generate Codes</button>
-                <div class="progress-bar">
-                    <div class="progress" id="generateProgress"></div>
-                </div>
-                <div class="result-area" id="codeResults"></div>
-            </div>
-
-            <div class="tab-content" id="accounts">
-                <h2 class="card-title"><i class="fas fa-user-plus"></i> Account Generator</h2>
-                <div class="form-group">
-                    <label for="accountAmount">Number of Accounts</label>
-                    <input type="number" id="accountAmount" min="1" max="50" value="5">
-                </div>
-                <div class="form-group">
-                    <label for="accountType">Account Type</label>
-                    <select id="accountType">
-                        <option value="basic">Basic</option>
-                        <option value="premium">Premium</option>
-                        <option value="vip">VIP</option>
-                    </select>
-                </div>
-                <button class="btn btn-block glow-effect" id="generateAccountsBtn">Generate Accounts</button>
-                <div class="progress-bar">
-                    <div class="progress" id="accountProgress"></div>
-                </div>
-                <div class="result-area" id="accountResults"></div>
-            </div>
-
-            <div class="tab-content" id="settings">
-                <h2 class="card-title"><i class="fas fa-cog"></i> Generator Settings</h2>
-                <div class="settings-grid">
-                    <div class="form-group">
-                        <label for="proxyUsage">Use Proxies</label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="proxyUsage">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="autoVerify">Auto Verify</label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="autoVerify">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="advancedAlgorithm">Advanced Algorithm</label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="advancedAlgorithm">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="autoSave">Auto Save Results</label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="autoSave">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
+        <h1>Discord Account Lookup</h1>
+        <div class="input-group">
+            <input type="text" id="userId" placeholder="Enter Discord User ID">
+            <button onclick="lookupUser()">Lookup</button>
         </div>
-
-        <div class="card">
-            <h2 class="card-title"><i class="fas fa-chart-bar"></i> Generator Stats</h2>
-            <div class="stats">
-                <div class="stat-item float-effect">
-                    <div class="stat-value" id="totalCodes">0</div>
-                    <div class="stat-label">Total Codes</div>
-                </div>
-                <div class="stat-item float-effect">
-                    <div class="stat-value" id="totalAccounts">0</div>
-                    <div class="stat-label">Total Accounts</div>
-                </div>
-                <div class="stat-item float-effect">
-                    <div class="stat-value" id="successRate">0%</div>
-                    <div class="stat-label">Success Rate</div>
-                </div>
-                <div class="stat-item float-effect">
-                    <div class="stat-value" id="generationSpeed">0/s</div>
-                    <div class="stat-label">Generation Speed</div>
-                </div>
-            </div>
-        </div>
+        <div id="result"></div>
     </div>
 
-    <div class="notification" id="notification"></div>
-
-    <footer>
-        Made with <span class="heart">❤</span> by Advanced Generator Team
-    </footer>
-
     <script>
-        // DOM Elements
-        const tabs = document.querySelectorAll('.tab');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const generateBtn = document.getElementById('generateBtn');
-        const generateAccountsBtn = document.getElementById('generateAccountsBtn');
-        const codeResults = document.getElementById('codeResults');
-        const accountResults = document.getElementById('accountResults');
-        const generateProgress = document.getElementById('generateProgress');
-        const accountProgress = document.getElementById('accountProgress');
-        const totalCodesElement = document.getElementById('totalCodes');
-        const totalAccountsElement = document.getElementById('totalAccounts');
-        const successRateElement = document.getElementById('successRate');
-        const generationSpeedElement = document.getElementById('generationSpeed');
-        const notificationElement = document.getElementById('notification');
+        const API_ENDPOINT = 'https://discord.com/api/v10/users/';
 
-        // State variables
-        let totalCodes = 0;
-        let totalAccounts = 0;
-        let successfulOperations = 0;
-        let generationStartTime;
+        async function lookupUser() {
+            const userId = document.getElementById('userId').value.trim();
+            const resultDiv = document.getElementById('result');
 
-        // Tab functionality
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabId = tab.getAttribute('data-tab');
-                tabs.forEach(t => t.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
+            if (!userId) {
+                resultDiv.innerHTML = '<p class="error">Please enter a Discord User ID</p>';
+                return;
+            }
 
-        // Generate Codes
-        generateBtn.addEventListener('click', () => {
-            const codeType = document.getElementById('codeType').value;
-            const codeAmount = parseInt(document.getElementById('codeAmount').value);
-            
-            generateCodes(codeType, codeAmount);
-        });
+            resultDiv.innerHTML = '<p class="loading">Loading user information...</p>';
 
-        // Generate Accounts
-        generateAccountsBtn.addEventListener('click', () => {
-            const accountType = document.getElementById('accountType').value;
-            const accountAmount = parseInt(document.getElementById('accountAmount').value);
-            
-            generateAccounts(accountType, accountAmount);
-        });
+            try {
+                const response = await fetch(API_ENDPOINT + userId, {
+                    headers: {
+                        'Authorization': 'MTM0NTk0MDc0OTQ2Mzg0NjkyMg.GmtP0d.9E2grpJ0gKpKmzhRt80D_TiGAtTLqeQp76VRdo'
+                    }
+                });
 
-        // Generate Codes function
-        function generateCodes(type, amount) {
-            codeResults.innerHTML = '';
-            generateProgress.style.width = '0%';
-            generationStartTime = Date.now();
-            
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 100 / amount;
-                generateProgress.style.width = `${progress}%`;
-                
-                const code = generateCode(type);
-                const resultItem = document.createElement('div');
-                resultItem.classList.add('result-item');
-                resultItem.innerHTML = `
-                    <span>${code}</span>
-                    <button class="copy-btn" onclick="copyToClipboard('${code}')">
-                        <i class="fas fa-copy"></i>
-                    </button>
-                `;
-                codeResults.appendChild(resultItem);
-                
-                totalCodes++;
-                updateStats();
-                
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    showNotification('Codes generated successfully!', 'success');
+                if (!response.ok) {
+                    throw new Error('User not found or API error');
                 }
-            }, 100);
-        }
 
-        // Generate Accounts function
-        function generateAccounts(type, amount) {
-            accountResults.innerHTML = '';
-            accountProgress.style.width = '0%';
-            generationStartTime = Date.now();
-            
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 100 / amount;
-                accountProgress.style.width = `${progress}%`;
-                
-                const account = generateAccount(type);
-                const resultItem = document.createElement('div');
-                resultItem.classList.add('result-item');
-                resultItem.innerHTML = `
-                    <span>${account.username} | ${account.email} | ${account.password}</span>
-                    <button class="copy-btn" onclick="copyToClipboard('${account.username}|${account.email}|${account.password}')">
-                        <i class="fas fa-copy"></i>
-                    </button>
-                `;
-                accountResults.appendChild(resultItem);
-                
-                totalAccounts++;
-                updateStats();
-                
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    showNotification('Accounts generated successfully!', 'success');
-                }
-            }, 200);
-        }
-
-        // Generate Code helper function
-        function generateCode(type) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 16; i++) {
-                code += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            
-            switch (type) {
-                case 'standard':
-                    return `STD-${code}`;
-                case 'premium':
-                    return `PRM-${code}`;
-                case 'promotional':
-                    return `PROMO-${code}`;
+                const userData = await response.json();
+                displayUserInfo(userData);
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="error">${error.message}</p>`;
             }
         }
 
-        // Generate Account helper function
-        function generateAccount(type) {
-            const firstNames = ['John', 'Jane', 'Mike', 'Emily', 'David', 'Sarah', 'Chris', 'Lisa'];
-            const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis'];
-            const domains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'];
-            
-            const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-            const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-            const username = `${firstName.toLowerCase()}${lastName.toLowerCase()}${Math.floor(Math.random() * 1000)}`;
-            const domain = domains[Math.floor(Math.random() * domains.length)];
-            const email = `${username}@${domain}`;
-            const password = generatePassword();
-            
-            return { username, email, password };
+        function displayUserInfo(user) {
+            const resultDiv = document.getElementById('result');
+            const createdAt = new Date(decodeSnowflake(user.id));
+            const accountAge = getAccountAge(createdAt);
+
+            const avatarUrl = user.avatar
+                ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+                : 'https://cdn.discordapp.com/embed/avatars/0.png';
+
+            resultDiv.innerHTML = `
+                <div class="user-info">
+                    <img src="${avatarUrl}" alt="User Avatar" class="avatar">
+                    <div class="user-details">
+                        <h2>${user.username}#${user.discriminator}</h2>
+                        <p><strong>Display Name:</strong> ${user.global_name || 'Not set'}</p>
+                        <p><strong>User ID:</strong> ${user.id}</p>
+                        <p><strong>Account Created:</strong> ${createdAt.toUTCString()}</p>
+                        <p><strong>Account Age:</strong> ${accountAge}</p>
+                        <p><strong>Bot:</strong> ${user.bot ? 'Yes' : 'No'}</p>
+                        <p><strong>System:</strong> ${user.system ? 'Yes' : 'No'}</p>
+                        <p><strong>Banner Color:</strong> ${user.accent_color ? `#${user.accent_color.toString(16)}` : 'None'}</p>
+                    </div>
+                </div>
+            `;
         }
 
-        // Generate Password helper function
-        function generatePassword() {
-            const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-            const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            const numbers = '0123456789';
-            const symbols = '!@#$%^&*()_+[]{}|;:,.<>?';
-            const allChars = lowercase + uppercase + numbers + symbols;
-            
-            let password = '';
-            for (let i = 0; i < 12; i++) {
-                password += allChars.charAt(Math.floor(Math.random() * allChars.length));
-            }
-            return password;
+        function decodeSnowflake(snowflake) {
+            return Number(BigInt(snowflake) >> 22n) + 1420070400000;
         }
 
-        // Update Stats function
-        function updateStats() {
-            totalCodesElement.textContent = totalCodes;
-            totalAccountsElement.textContent = totalAccounts;
-            const totalOperations = totalCodes + totalAccounts;
-            const successRate = (successfulOperations / totalOperations * 100).toFixed(2);
-            successRateElement.textContent = `${successRate}%`;
-            
-            const elapsedTime = (Date.now() - generationStartTime) / 1000;
-            const speed = (totalOperations / elapsedTime).toFixed(2);
-            generationSpeedElement.textContent = `${speed}/s`;
-        }
+        function getAccountAge(createdAt) {
+            const now = new Date();
+            const diffInMs = now - createdAt;
+            const years = Math.floor(diffInMs / (1000 * 60 * 60 * 24 * 365));
+            const months = Math.floor((diffInMs % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+            const days = Math.floor((diffInMs % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
 
-        // Show Notification function
-        function showNotification(message, type) {
-            notificationElement.textContent = message;
-            notificationElement.className = `notification ${type} show`;
-            setTimeout(() => {
-                notificationElement.classList.remove('show');
-            }, 3000);
-        }
+            let age = '';
+            if (years > 0) age += `${years} year${years > 1 ? 's' : ''} `;
+            if (months > 0) age += `${months} month${months > 1 ? 's' : ''} `;
+            if (days > 0) age += `${days} day${days > 1 ? 's' : ''}`;
 
-        // Copy to Clipboard function
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showNotification('Copied to clipboard!', 'success');
-            }, (err) => {
-                showNotification('Failed to copy text', 'error');
-            });
+            return age.trim();
         }
-
-        // Initialize stats
-        updateStats();
     </script>
 </body>
 </html>
