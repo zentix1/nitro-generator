@@ -3,200 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord Nitro Generator</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <title>Advanced Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== VARIABLES ===== */
         :root {
-            /* Light Theme Colors */
-            --primary-light: #5865f2;
-            --secondary-light: #eb459e;
-            --background-light: #f6f6f7;
-            --card-bg-light: rgba(255, 255, 255, 0.7);
-            --text-light: #2e3338;
-            --border-light: rgba(0, 0, 0, 0.1);
-            
-            /* Dark Theme Colors */
-            --primary-dark: #5865f2;
-            --secondary-dark: #eb459e;
-            --background-dark: #36393f;
-            --card-bg-dark: rgba(32, 34, 37, 0.7);
-            --text-dark: #dcddde;
-            --border-dark: rgba(255, 255, 255, 0.1);
-            
-            /* Common Colors */
-            --success: #57f287;
-            --warning: #fee75c;
-            --danger: #ed4245;
-            
-            /* Current Theme Colors (will be updated by JS) */
-            --primary: var(--primary-dark);
-            --secondary: var(--secondary-dark);
-            --background: var(--background-dark);
-            --card-bg: var(--card-bg-dark);
-            --text: var(--text-dark);
-            --border: var(--border-dark);
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --background: #2c3e50;
+            --background-light: #34495e;
+            --text: #ecf0f1;
+            --text-muted: #bdc3c7;
+            --danger: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
         }
 
-        /* ===== RESET & BASE STYLES ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
         }
 
         body {
+            font-family: 'Roboto', sans-serif;
             background-color: var(--background);
             color: var(--text);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
         }
 
-        /* ===== BACKGROUND ANIMATION ===== */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .bg-animation::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, transparent 20%, var(--background) 70%),
-                        linear-gradient(to right, var(--primary), var(--secondary));
-            opacity: 0.1;
-            animation: bgRotate 20s linear infinite;
-        }
-
-        @keyframes bgRotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* ===== CONTAINER STYLES ===== */
         .container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex-grow: 1;
         }
 
-        /* ===== HEADER STYLES ===== */
         header {
             text-align: center;
             margin-bottom: 2rem;
-            position: relative;
         }
 
-        .logo {
-            font-size: 2.5rem;
-            font-weight: 700;
+        h1 {
+            font-size: 3rem;
+            color: var(--primary);
             margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 10px rgba(88, 101, 242, 0.3);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                text-shadow: 0 0 10px rgba(88, 101, 242, 0.3);
-            }
-            50% {
-                text-shadow: 0 0 20px rgba(88, 101, 242, 0.5);
-            }
-            100% {
-                text-shadow: 0 0 10px rgba(88, 101, 242, 0.3);
-            }
+            text-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
         }
 
         .subtitle {
-            font-size: 1rem;
-            opacity: 0.8;
-            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-size: 1.2rem;
         }
 
-        /* ===== THEME TOGGLE ===== */
-        .theme-toggle {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            transform: rotate(30deg);
-        }
-
-        /* ===== CARD STYLES ===== */
         .card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
+            background-color: var(--background-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
 
         .card-title {
             font-size: 1.5rem;
+            font-weight: 600;
             margin-bottom: 1rem;
             color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
         }
 
-        /* ===== BUTTON STYLES ===== */
-        .btn {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 0.75rem 1.5rem;
+        .card-title i {
+            margin-right: 0.5rem;
+            font-size: 1.2em;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--background);
+            background-color: rgba(0, 0, 0, 0.1);
+            color: var(--text);
+            border-radius: 8px;
             font-size: 1rem;
-            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             position: relative;
             overflow: hidden;
         }
@@ -208,8 +144,13 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.7s ease;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: all 0.6s;
         }
 
         .btn:hover::before {
@@ -217,17 +158,9 @@
         }
 
         .btn:hover {
-            box-shadow: 0 0 15px var(--primary);
+            background-color: #2980b9;
             transform: translateY(-2px);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
         }
 
         .btn-block {
@@ -235,69 +168,65 @@
             width: 100%;
         }
 
-        /* ===== NITRO CODE DISPLAY ===== */
-        .nitro-code-container {
-            margin: 1.5rem 0;
-            position: relative;
-        }
-
-        .nitro-code {
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
+        .result-area {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--background-light);
+            border-radius: 8px;
             padding: 1rem;
-            font-family: monospace;
-            font-size: 1.1rem;
-            text-align: center;
-            position: relative;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            transition: all 0.3s ease;
+            margin-top: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
         }
 
-        .nitro-code:hover {
-            background: rgba(0, 0, 0, 0.15);
+        .result-item {
+            margin-bottom: 0.5rem;
+            padding: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            font-family: 'Roboto Mono', monospace;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-item:hover {
+            background-color: rgba(52, 152, 219, 0.2);
+            transform: translateX(5px);
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
         }
 
         .copy-btn {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--primary);
-            color: white;
+            background: none;
             border: none;
-            border-radius: 5px;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: var(--text-muted);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
         }
 
         .copy-btn:hover {
-            background: var(--secondary);
-        }
-
-        /* ===== PROGRESS BAR ===== */
-        .progress-container {
-            margin: 1rem 0;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            height: 10px;
-            overflow: hidden;
-            display: none;
+            color: var(--primary);
         }
 
         .progress-bar {
-            height: 100%;
+            width: 100%;
+            height: 10px;
+            background-color: var(--background);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress {
             width: 0;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            height: 100%;
+            background-color: var(--primary);
             transition: width 0.3s ease;
         }
 
-        /* ===== STATS DISPLAY ===== */
         .stats {
             display: flex;
             justify-content: space-between;
@@ -306,7 +235,17 @@
 
         .stat-item {
             text-align: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
             flex: 1;
+            margin: 0 0.5rem;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .stat-value {
@@ -316,177 +255,134 @@
         }
 
         .stat-label {
-            font-size: 0.8rem;
-            opacity: 0.8;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
         }
 
-        /* ===== VERIFICATION SYSTEM ===== */
-        .verification-container {
-            display: none;
-            margin-top: 1.5rem;
-        }
-
-        .verification-title {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .verification-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 1rem;
-        }
-
-        .verification-box {
-            aspect-ratio: 1;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
+        .tabs {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-bottom: 1rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background-color: transparent;
+            color: var(--text-muted);
+            border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1.5rem;
-            border: 1px solid var(--border);
+            font-weight: 500;
         }
 
-        .verification-box:hover {
-            background: rgba(0, 0, 0, 0.2);
+        .tab:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
-        .verification-box.selected {
-            background: var(--primary);
-            color: white;
+        .tab.active {
+            background-color: var(--primary);
+            color: #fff;
         }
 
-        .verification-question {
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
+        .tab-content {
+            display: none;
         }
 
-        .verification-input {
-            width: 100%;
-            padding: 0.75rem;
-            border-radius: 5px;
-            border: 1px solid var(--border);
-            background: rgba(0, 0, 0, 0.1);
-            color: var(--text);
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
+        .tab-content.active {
+            display: block;
         }
 
-        .verification-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.3);
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
         }
 
-        /* ===== NOTIFICATION SYSTEM ===== */
-        .notification-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--background);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
         }
 
         .notification {
-            background: var(--card-bg);
-            border-radius: 5px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
             padding: 1rem;
-            margin-bottom: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transform: translateX(120%);
-            animation: slideIn 0.3s forwards, fadeOut 0.3s 2.7s forwards;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            max-width: 300px;
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
+            background-color: var(--background-light);
+            color: var(--text);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .notification.success {
-            border-left: 4px solid var(--success);
+            background-color: var(--success);
         }
 
         .notification.error {
-            border-left: 4px solid var(--danger);
+            background-color: var(--danger);
         }
 
-        .notification.info {
-            border-left: 4px solid var(--primary);
-        }
-
-        .notification-icon {
-            font-size: 1.2rem;
-        }
-
-        .notification.success .notification-icon {
-            color: var(--success);
-        }
-
-        .notification.error .notification-icon {
-            color: var(--danger);
-        }
-
-        .notification.info .notification-icon {
-            color: var(--primary);
-        }
-
-        @keyframes slideIn {
-            to {
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                transform: translateX(120%);
-            }
-        }
-
-        /* ===== CONFETTI EFFECT ===== */
-        .confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: var(--primary);
-            opacity: 0.8;
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* ===== FOOTER STYLES ===== */
         footer {
             text-align: center;
-            padding: 1.5rem;
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
+            padding: 1rem;
+            background-color: var(--background-light);
+            color: var(--text-muted);
         }
 
-        footer .heart {
+        .heart {
             color: var(--danger);
             display: inline-block;
             animation: heartbeat 1.5s infinite;
@@ -504,517 +400,375 @@
             }
         }
 
-        /* ===== RESPONSIVE STYLES ===== */
+        /* Cool effect animations */
+        @keyframes glowing {
+            0% {
+                box-shadow: 0 0 5px var(--primary);
+            }
+            50% {
+                box-shadow: 0 0 20px var(--primary);
+            }
+            100% {
+                box-shadow: 0 0 5px var(--primary);
+            }
+        }
+
+        .glow-effect {
+            animation: glowing 2s infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .float-effect {
+            animation: float 3s ease-in-out infinite;
+        }
+
         @media (max-width: 768px) {
             .container {
-                margin: 1rem auto;
+                padding: 1rem;
             }
-            
-            .logo {
-                font-size: 2rem;
+
+            .settings-grid {
+                grid-template-columns: 1fr;
             }
-            
-            .card {
-                padding: 1.5rem;
-            }
-            
+
             .stats {
                 flex-direction: column;
                 gap: 1rem;
             }
-        }
 
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 1.8rem;
-            }
-            
-            .card {
-                padding: 1rem;
-            }
-            
-            .nitro-code {
-                font-size: 0.9rem;
-                padding: 0.75rem;
-                padding-right: 40px;
-            }
-            
-            .verification-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .stat-item {
+                margin: 0.5rem 0;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Background Animation -->
-    <div class="bg-animation"></div>
-
     <div class="container">
-        <!-- Header -->
         <header>
-            <h1 class="logo">Discord Nitro Generator</h1>
-            <p class="subtitle">Generate unlimited Discord Nitro gift codes</p>
-            <button class="theme-toggle" id="themeToggle">
-                <i class="fas fa-moon"></i>
-            </button>
+            <h1 class="float-effect">Advanced Generator</h1>
+            <p class="subtitle">Generate codes and accounts with advanced options</p>
         </header>
 
-        <!-- Main Content -->
-        <main>
-            <!-- Generator Card -->
-            <div class="card">
-                <h2 class="card-title">
-                    <i class="fas fa-gift"></i>
-                    Nitro Code Generator
-                </h2>
-                
-                <!-- Nitro Code Display -->
-                <div class="nitro-code-container">
-                    <div class="nitro-code" id="nitroCode">
-                        Click the button below to generate a code
-                    </div>
-                    <button class="copy-btn" id="copyBtn" title="Copy to clipboard">
-                        <i class="fas fa-copy"></i>
-                    </button>
-                </div>
-                
-                <!-- Progress Bar -->
-                <div class="progress-container" id="progressContainer">
-                    <div class="progress-bar" id="progressBar"></div>
-                </div>
-                
-                <!-- Generate Button -->
-                <button class="btn btn-block" id="generateBtn">
-                    <i class="fas fa-bolt"></i>
-                    Generate Nitro Code
-                </button>
-                
-                <!-- Stats Display -->
-                <div class="stats">
-                    <div class="stat-item">
-                        <div class="stat-value" id="generatedCount">0</div>
-                        <div class="stat-label">Generated</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="cooldownTimer">0s</div>
-                        <div class="stat-label">Cooldown</div>
-                    </div>
-                </div>
+        <div class="card">
+            <div class="tabs">
+                <button class="tab active" data-tab="generator">Generator</button>
+                <button class="tab" data-tab="accounts">Accounts</button>
+                <button class="tab" data-tab="settings">Settings</button>
             </div>
-            
-            <!-- Verification System -->
-            <div class="card verification-container" id="verificationContainer">
-                <h2 class="card-title">
-                    <i class="fas fa-shield-alt"></i>
-                    Human Verification
-                </h2>
-                
-                <p class="verification-title">Complete the verification to reveal your Nitro code</p>
-                
-                <!-- Box Verification -->
-                <div class="verification-grid" id="boxVerification">
-                    <div class="verification-box" data-index="0"></div>
-                    <div class="verification-box" data-index="1"></div>
-                    <div class="verification-box" data-index="2"></div>
-                    <div class="verification-box" data-index="3"></div>
-                    <div class="verification-box" data-index="4"></div>
-                    <div class="verification-box" data-index="5"></div>
-                    <div class="verification-box" data-index="6"></div>
-                    <div class="verification-box" data-index="7"></div>
-                    <div class="verification-box" data-index="8"></div>
-                </div>
-                
-                <!-- Question Verification -->
-                <div id="questionVerification" style="display: none;">
-                    <p class="verification-question" id="verificationQuestion"></p>
-                    <input type="text" class="verification-input" id="verificationAnswer" placeholder="Your answer...">
-                </div>
-                
-                <!-- Verify Button -->
-                <button class="btn btn-block" id="verifyBtn">
-                    <i class="fas fa-check-circle"></i>
-                    Verify
-                </button>
-            </div>
-        </main>
 
-        <!-- Footer -->
-        <footer>
-            Made with <span class="heart">❤</span> by Discord Nitro Generator
-        </footer>
+            <div class="tab-content active" id="generator">
+                <h2 class="card-title"><i class="fas fa-code"></i> Code Generator</h2>
+                <div class="form-group">
+                    <label for="codeType">Code Type</label>
+                    <select id="codeType">
+                        <option value="standard">Standard</option>
+                        <option value="premium">Premium</option>
+                        <option value="promotional">Promotional</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="codeAmount">Number of Codes</label>
+                    <input type="number" id="codeAmount" min="1" max="100" value="10">
+                </div>
+                <button class="btn btn-block glow-effect" id="generateBtn">Generate Codes</button>
+                <div class="progress-bar">
+                    <div class="progress" id="generateProgress"></div>
+                </div>
+                <div class="result-area" id="codeResults"></div>
+            </div>
+
+            <div class="tab-content" id="accounts">
+                <h2 class="card-title"><i class="fas fa-user-plus"></i> Account Generator</h2>
+                <div class="form-group">
+                    <label for="accountAmount">Number of Accounts</label>
+                    <input type="number" id="accountAmount" min="1" max="50" value="5">
+                </div>
+                <div class="form-group">
+                    <label for="accountType">Account Type</label>
+                    <select id="accountType">
+                        <option value="basic">Basic</option>
+                        <option value="premium">Premium</option>
+                        <option value="vip">VIP</option>
+                    </select>
+                </div>
+                <button class="btn btn-block glow-effect" id="generateAccountsBtn">Generate Accounts</button>
+                <div class="progress-bar">
+                    <div class="progress" id="accountProgress"></div>
+                </div>
+                <div class="result-area" id="accountResults"></div>
+            </div>
+
+            <div class="tab-content" id="settings">
+                <h2 class="card-title"><i class="fas fa-cog"></i> Generator Settings</h2>
+                <div class="settings-grid">
+                    <div class="form-group">
+                        <label for="proxyUsage">Use Proxies</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="proxyUsage">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="autoVerify">Auto Verify</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="autoVerify">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="advancedAlgorithm">Advanced Algorithm</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="advancedAlgorithm">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="autoSave">Auto Save Results</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="autoSave">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-bar"></i> Generator Stats</h2>
+            <div class="stats">
+                <div class="stat-item float-effect">
+                    <div class="stat-value" id="totalCodes">0</div>
+                    <div class="stat-label">Total Codes</div>
+                </div>
+                <div class="stat-item float-effect">
+                    <div class="stat-value" id="totalAccounts">0</div>
+                    <div class="stat-label">Total Accounts</div>
+                </div>
+                <div class="stat-item float-effect">
+                    <div class="stat-value" id="successRate">0%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+                <div class="stat-item float-effect">
+                    <div class="stat-value" id="generationSpeed">0/s</div>
+                    <div class="stat-label">Generation Speed</div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Notification Container -->
-    <div class="notification-container" id="notificationContainer"></div>
-    
-    <!-- Confetti Container -->
-    <div class="confetti-container" id="confettiContainer"></div>
+    <div class="notification" id="notification"></div>
+
+    <footer>
+        Made with <span class="heart">❤</span> by Advanced Generator Team
+    </footer>
 
     <script>
-        // ===== DOM ELEMENTS =====
-        const themeToggle = document.getElementById('themeToggle');
-        const nitroCode = document.getElementById('nitroCode');
-        const copyBtn = document.getElementById('copyBtn');
+        // DOM Elements
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
         const generateBtn = document.getElementById('generateBtn');
-        const progressContainer = document.getElementById('progressContainer');
-        const progressBar = document.getElementById('progressBar');
-        const generatedCount = document.getElementById('generatedCount');
-        const cooldownTimer = document.getElementById('cooldownTimer');
-        const verificationContainer = document.getElementById('verificationContainer');
-        const boxVerification = document.getElementById('boxVerification');
-        const questionVerification = document.getElementById('questionVerification');
-        const verificationQuestion = document.getElementById('verificationQuestion');
-        const verificationAnswer = document.getElementById('verificationAnswer');
-        const verifyBtn = document.getElementById('verifyBtn');
-        const notificationContainer = document.getElementById('notificationContainer');
-        const confettiContainer = document.getElementById('confettiContainer');
+        const generateAccountsBtn = document.getElementById('generateAccountsBtn');
+        const codeResults = document.getElementById('codeResults');
+        const accountResults = document.getElementById('accountResults');
+        const generateProgress = document.getElementById('generateProgress');
+        const accountProgress = document.getElementById('accountProgress');
+        const totalCodesElement = document.getElementById('totalCodes');
+        const totalAccountsElement = document.getElementById('totalAccounts');
+        const successRateElement = document.getElementById('successRate');
+        const generationSpeedElement = document.getElementById('generationSpeed');
+        const notificationElement = document.getElementById('notification');
 
-        // ===== STATE VARIABLES =====
-        let isDarkMode = true; // Default to dark mode
-        let isGenerating = false;
-        let cooldownActive = false;
-        let cooldownSeconds = 0;
-        let cooldownInterval;
-        let generatedCodesCount = 0;
-        let currentCode = '';
-        let verificationMode = '';
-        let verificationTarget = [];
-        let selectedBoxes = [];
-        
-        // ===== INITIALIZATION =====
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize theme
-            updateTheme();
-            
-            // Add event listeners
-            themeToggle.addEventListener('click', toggleTheme);
-            generateBtn.addEventListener('click', startGeneration);
-            copyBtn.addEventListener('click', copyToClipboard);
-            verifyBtn.addEventListener('click', verifyHuman);
-            
-            // Initialize box verification
-            const verificationBoxes = document.querySelectorAll('.verification-box');
-            verificationBoxes.forEach(box => {
-                box.addEventListener('click', () => toggleBox(box));
+        // State variables
+        let totalCodes = 0;
+        let totalAccounts = 0;
+        let successfulOperations = 0;
+        let generationStartTime;
+
+        // Tab functionality
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
             });
         });
 
-        // ===== THEME FUNCTIONS =====
-        function toggleTheme() {
-            isDarkMode = !isDarkMode;
-            updateTheme();
-        }
+        // Generate Codes
+        generateBtn.addEventListener('click', () => {
+            const codeType = document.getElementById('codeType').value;
+            const codeAmount = parseInt(document.getElementById('codeAmount').value);
+            
+            generateCodes(codeType, codeAmount);
+        });
 
-        function updateTheme() {
-            const root = document.documentElement;
+        // Generate Accounts
+        generateAccountsBtn.addEventListener('click', () => {
+            const accountType = document.getElementById('accountType').value;
+            const accountAmount = parseInt(document.getElementById('accountAmount').value);
             
-            if (isDarkMode) {
-                root.style.setProperty('--primary', 'var(--primary-dark)');
-                root.style.setProperty('--secondary', 'var(--secondary-dark)');
-                root.style.setProperty('--background', 'var(--background-dark)');
-                root.style.setProperty('--card-bg', 'var(--card-bg-dark)');
-                root.style.setProperty('--text', 'var(--text-dark)');
-                root.style.setProperty('--border', 'var(--border-dark)');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                root.style.setProperty('--primary', 'var(--primary-light)');
-                root.style.setProperty('--secondary', 'var(--secondary-light)');
-                root.style.setProperty('--background', 'var(--background-light)');
-                root.style.setProperty('--card-bg', 'var(--card-bg-light)');
-                root.style.setProperty('--text', 'var(--text-light)');
-                root.style.setProperty('--border', 'var(--border-light)');
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-        }
+            generateAccounts(accountType, accountAmount);
+        });
 
-        // ===== NITRO CODE GENERATION =====
-        function startGeneration() {
-            if (isGenerating || cooldownActive) return;
+        // Generate Codes function
+        function generateCodes(type, amount) {
+            codeResults.innerHTML = '';
+            generateProgress.style.width = '0%';
+            generationStartTime = Date.now();
             
-            isGenerating = true;
-            generateBtn.disabled = true;
-            nitroCode.textContent = 'Generating...';
-            
-            // Show and animate progress bar
-            progressContainer.style.display = 'block';
-            progressBar.style.width = '0%';
-            
-            // Animate progress bar
             let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += 2;
-                progressBar.style.width = `${progress}%`;
+            const interval = setInterval(() => {
+                progress += 100 / amount;
+                generateProgress.style.width = `${progress}%`;
+                
+                const code = generateCode(type);
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                resultItem.innerHTML = `
+                    <span>${code}</span>
+                    <button class="copy-btn" onclick="copyToClipboard('${code}')">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                `;
+                codeResults.appendChild(resultItem);
+                
+                totalCodes++;
+                updateStats();
                 
                 if (progress >= 100) {
-                    clearInterval(progressInterval);
-                    finishGeneration();
+                    clearInterval(interval);
+                    showNotification('Codes generated successfully!', 'success');
                 }
-            }, 30); // 50 steps * 30ms = ~1.5 seconds
+            }, 100);
         }
 
-        function finishGeneration() {
-            // Hide progress bar
-            setTimeout(() => {
-                progressContainer.style.display = 'none';
-            }, 300);
+        // Generate Accounts function
+        function generateAccounts(type, amount) {
+            accountResults.innerHTML = '';
+            accountProgress.style.width = '0%';
+            generationStartTime = Date.now();
             
-            // Show verification
-            verificationContainer.style.display = 'block';
-            
-            // Scroll to verification
-            verificationContainer.scrollIntoView({ behavior: 'smooth' });
-            
-            // Set up verification
-            setupVerification();
-            
-            // Generate the actual code (but don't show it yet)
-            currentCode = generateNitroCode();
-            
-            isGenerating = false;
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 100 / amount;
+                accountProgress.style.width = `${progress}%`;
+                
+                const account = generateAccount(type);
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                resultItem.innerHTML = `
+                    <span>${account.username} | ${account.email} | ${account.password}</span>
+                    <button class="copy-btn" onclick="copyToClipboard('${account.username}|${account.email}|${account.password}')">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                `;
+                accountResults.appendChild(resultItem);
+                
+                totalAccounts++;
+                updateStats();
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    showNotification('Accounts generated successfully!', 'success');
+                }
+            }, 200);
         }
 
-        function generateNitroCode() {
-            // Format: https://discord.gift/X9YB7-TKZQP-84MV2
+        // Generate Code helper function
+        function generateCode(type) {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             let code = '';
-            
-            // Generate 16 random characters
             for (let i = 0; i < 16; i++) {
                 code += characters.charAt(Math.floor(Math.random() * characters.length));
             }
             
-            // Format with hyphens (XXXXX-XXXXX-XXXXX)
-            code = code.substring(0, 5) + '-' + code.substring(5, 10) + '-' + code.substring(10, 15);
-            
-            return 'https://discord.gift/' + code;
-        }
-
-        function revealGeneratedCode() {
-            // Update the code display
-            nitroCode.textContent = currentCode;
-            
-            // Update stats
-            generatedCodesCount++;
-            generatedCount.textContent = generatedCodesCount;
-            
-            // Hide verification
-            verificationContainer.style.display = 'none';
-            
-            // Start cooldown
-            startCooldown();
-            
-            // Show success notification
-            showNotification('Code generated successfully!', 'success');
-            
-            // Create confetti effect
-            createConfetti();
-            
-            // Scroll back to the code
-            nitroCode.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function startCooldown() {
-            cooldownActive = true;
-            cooldownSeconds = 5; // 5 second cooldown
-            cooldownTimer.textContent = cooldownSeconds + 's';
-            
-            cooldownInterval = setInterval(() => {
-                cooldownSeconds--;
-                cooldownTimer.textContent = cooldownSeconds + 's';
-                
-                if (cooldownSeconds <= 0) {
-                    clearInterval(cooldownInterval);
-                    cooldownActive = false;
-                    generateBtn.disabled = false;
-                    cooldownTimer.textContent = '0s';
-                }
-            }, 1000);
-        }
-
-        // ===== VERIFICATION SYSTEM =====
-        function setupVerification() {
-            // Reset previous verification
-            selectedBoxes = [];
-            
-            // Randomly choose verification type
-            const verificationTypes = ['boxes', 'question'];
-            verificationMode = verificationTypes[Math.floor(Math.random() * verificationTypes.length)];
-            
-            if (verificationMode === 'boxes') {
-                // Box verification
-                boxVerification.style.display = 'grid';
-                questionVerification.style.display = 'none';
-                
-                // Reset boxes
-                const boxes = document.querySelectorAll('.verification-box');
-                boxes.forEach(box => {
-                    box.classList.remove('selected');
-                    box.innerHTML = '';
-                });
-                
-                // Randomly select 3 boxes to click
-                verificationTarget = [];
-                while (verificationTarget.length < 3) {
-                    const randomIndex = Math.floor(Math.random() * 9);
-                    if (!verificationTarget.includes(randomIndex)) {
-                        verificationTarget.push(randomIndex);
-                    }
-                }
-                
-                // Add icons to target boxes
-                verificationTarget.forEach(index => {
-                    boxes[index].innerHTML = '<i class="fas fa-robot"></i>';
-                });
-            } else {
-                // Question verification
-                boxVerification.style.display = 'none';
-                questionVerification.style.display = 'block';
-                
-                // Generate a simple math question
-                const num1 = Math.floor(Math.random() * 10) + 1;
-                const num2 = Math.floor(Math.random() * 10) + 1;
-                verificationQuestion.textContent = `What is ${num1} + ${num2}?`;
-                verificationTarget = [num1 + num2]; // Store the answer
-                
-                // Clear previous answer
-                verificationAnswer.value = '';
+            switch (type) {
+                case 'standard':
+                    return `STD-${code}`;
+                case 'premium':
+                    return `PRM-${code}`;
+                case 'promotional':
+                    return `PROMO-${code}`;
             }
         }
 
-        function toggleBox(box) {
-            const index = parseInt(box.dataset.index);
+        // Generate Account helper function
+        function generateAccount(type) {
+            const firstNames = ['John', 'Jane', 'Mike', 'Emily', 'David', 'Sarah', 'Chris', 'Lisa'];
+            const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis'];
+            const domains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'];
             
-            if (box.classList.contains('selected')) {
-                // Deselect
-                box.classList.remove('selected');
-                selectedBoxes = selectedBoxes.filter(i => i !== index);
-            } else {
-                // Select (max 3)
-                if (selectedBoxes.length < 3) {
-                    box.classList.add('selected');
-                    selectedBoxes.push(index);
-                }
-            }
+            const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+            const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+            const username = `${firstName.toLowerCase()}${lastName.toLowerCase()}${Math.floor(Math.random() * 1000)}`;
+            const domain = domains[Math.floor(Math.random() * domains.length)];
+            const email = `${username}@${domain}`;
+            const password = generatePassword();
+            
+            return { username, email, password };
         }
 
-        function verifyHuman() {
-            let isVerified = false;
+        // Generate Password helper function
+        function generatePassword() {
+            const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+            const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const numbers = '0123456789';
+            const symbols = '!@#$%^&*()_+[]{}|;:,.<>?';
+            const allChars = lowercase + uppercase + numbers + symbols;
             
-            if (verificationMode === 'boxes') {
-                // Check if selected boxes match target boxes
-                if (selectedBoxes.length === verificationTarget.length) {
-                    const allMatch = verificationTarget.every(target => selectedBoxes.includes(target));
-                    isVerified = allMatch;
-                }
-            } else {
-                // Check if answer is correct
-                const answer = parseInt(verificationAnswer.value);
-                isVerified = answer === verificationTarget[0];
+            let password = '';
+            for (let i = 0; i < 12; i++) {
+                password += allChars.charAt(Math.floor(Math.random() * allChars.length));
             }
-            
-            if (isVerified) {
-                showNotification('Verification successful!', 'success');
-                revealGeneratedCode();
-            } else {
-                showNotification('Verification failed. Please try again.', 'error');
-                setupVerification(); // Reset verification
-            }
-        }  'error');
-                setupVerification(); // Reset verification
-            }
+            return password;
         }
 
-        // ===== CLIPBOARD FUNCTIONS =====
-        function copyToClipboard() {
-            if (!currentCode) return;
+        // Update Stats function
+        function updateStats() {
+            totalCodesElement.textContent = totalCodes;
+            totalAccountsElement.textContent = totalAccounts;
+            const totalOperations = totalCodes + totalAccounts;
+            const successRate = (successfulOperations / totalOperations * 100).toFixed(2);
+            successRateElement.textContent = `${successRate}%`;
             
-            navigator.clipboard.writeText(currentCode)
-                .then(() => {
-                    showNotification('Code copied to clipboard!', 'info');
-                })
-                .catch(() => {
-                    showNotification('Failed to copy code', 'error');
-                });
+            const elapsedTime = (Date.now() - generationStartTime) / 1000;
+            const speed = (totalOperations / elapsedTime).toFixed(2);
+            generationSpeedElement.textContent = `${speed}/s`;
         }
 
-        // ===== NOTIFICATION SYSTEM =====
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            
-            let icon = 'info-circle';
-            if (type === 'success') icon = 'check-circle';
-            if (type === 'error') icon = 'exclamation-circle';
-            
-            notification.innerHTML = `
-                <div class="notification-icon">
-                    <i class="fas fa-${icon}"></i>
-                </div>
-                <div class="notification-message">${message}</div>
-            `;
-            
-            notificationContainer.appendChild(notification);
-            
-            // Remove notification after animation completes
+        // Show Notification function
+        function showNotification(message, type) {
+            notificationElement.textContent = message;
+            notificationElement.className = `notification ${type} show`;
             setTimeout(() => {
-                notification.remove();
+                notificationElement.classList.remove('show');
             }, 3000);
         }
 
-        // ===== CONFETTI EFFECT =====
-        function createConfetti() {
-            const colors = ['#5865f2', '#eb459e', '#57f287', '#fee75c'];
-            
-            // Create 100 confetti pieces
-            for (let i = 0; i < 100; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                
-                // Random position
-                const left = Math.random() * 100;
-                confetti.style.left = `${left}%`;
-                
-                // Random color
-                const colorIndex = Math.floor(Math.random() * colors.length);
-                confetti.style.backgroundColor = colors[colorIndex];
-                
-                // Random shape
-                const shapes = ['circle', 'square', 'triangle'];
-                const shape = shapes[Math.floor(Math.random() * shapes.length)];
-                
-                if (shape === 'circle') {
-                    confetti.style.borderRadius = '50%';
-                } else if (shape === 'triangle') {
-                    confetti.style.width = '0';
-                    confetti.style.height = '0';
-                    confetti.style.backgroundColor = 'transparent';
-                    confetti.style.borderLeft = '5px solid transparent';
-                    confetti.style.borderRight = '5px solid transparent';
-                    confetti.style.borderBottom = `10px solid ${colors[colorIndex]}`;
-                }
-                
-                // Random size
-                const size = Math.random() * 10 + 5;
-                confetti.style.width = `${size}px`;
-                confetti.style.height = `${size}px`;
-                
-                // Random rotation
-                const rotation = Math.random() * 360;
-                confetti.style.transform = `rotate(${rotation}deg)`;
-                
-                // Animation duration
-                const duration = Math.random() * 3 + 2;
-                confetti.style.animationDuration = `${duration}s`;
-                
-                // Add to container
-                confettiContainer.appendChild(confetti);
-                
-                // Remove after animation
-                setTimeout(() => {
-                    confetti.remove();
-                }, duration * 1000);
-            }
+        // Copy to Clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Copied to clipboard!', 'success');
+            }, (err) => {
+                showNotification('Failed to copy text', 'error');
+            });
         }
+
+        // Initialize stats
+        updateStats();
     </script>
 </body>
 </html>
+
