@@ -3,217 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 Fake Discord Nitro Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Fake Discord Nitro Code Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
     <style>
-        /* Cool Background */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #7289DA, #23272A);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        /* Animated Background Effect */
-        .background {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -1;
-        }
-
-        .background span {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 10s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* Main Card */
-        .container {
-            background: rgba(44, 47, 51, 0.9);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            width: 90%;
-            max-width: 450px;
-            backdrop-filter: blur(10px);
-        }
-
-        h1 {
-            color: #7289DA;
-            font-size: 26px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            font-size: 14px;
-            color: #B9BBBE;
-        }
-
-        /* Button Styling */
-        button {
-            background: #5865F2;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: 0.3s ease;
-        }
-
-        button:hover {
-            background: #4752C4;
-            transform: scale(1.05);
-        }
-
-        /* Nitro Codes Container */
-        .codes-container {
-            margin-top: 20px;
-            text-align: left;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px;
-            border-radius: 8px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .code {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #7289DA;
-            padding: 8px;
-            margin: 5px 0;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: bold;
-            color: white;
-            transition: 0.3s ease-in-out;
-        }
-
-        .code:hover {
-            background: #5a6cb2;
-            transform: scale(1.02);
-        }
-
-        .copy-btn {
-            background: #23272A;
-            border: none;
-            color: white;
-            padding: 5px;
-            font-size: 12px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-
-        .copy-btn:hover {
-            background: #1E2124;
-        }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #43B581;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            display: none;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        footer {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #B9BBBE;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', sans-serif; }
+        body { background: linear-gradient(135deg, #1a1a2e, #16213e); color: white; text-align: center; overflow: hidden; }
+        .container { width: 90%; max-width: 500px; margin: 50px auto; padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 10px; box-shadow: 0 0 10px cyan; }
+        h1 { font-size: 24px; margin-bottom: 20px; }
+        .code-box { padding: 10px; background: rgba(255, 255, 255, 0.2); border-radius: 5px; margin: 20px 0; font-size: 20px; font-weight: bold; color: #ffcc00; text-shadow: 0 0 10px yellow; }
+        button { padding: 10px 20px; font-size: 18px; background: cyan; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 0 5px cyan; transition: 0.3s; }
+        button:hover { background: #00ffaa; box-shadow: 0 0 10px #00ffaa; }
+        .hidden { display: none; }
+        .cooldown { margin-top: 10px; font-size: 14px; color: red; }
+        .progress { width: 100%; height: 5px; background: gray; margin-top: 10px; }
+        .progress-bar { width: 0%; height: 100%; background: cyan; transition: width 3s linear; }
     </style>
 </head>
 <body>
-
-    <!-- Animated Background -->
-    <div class="background">
-        <span style="top: 10%; left: 5%;"></span>
-        <span style="top: 50%; left: 30%;"></span>
-        <span style="top: 20%; left: 70%;"></span>
-        <span style="top: 80%; left: 90%;"></span>
-        <span style="top: 60%; left: 50%;"></span>
-    </div>
-
     <div class="container">
-        <h1>🚀 Fake Discord Nitro Generator</h1>
-        <p>Generate fake Nitro codes & prank your friends!</p>
-        <button onclick="generateCodes()">Generate Codes</button>
-        <div class="codes-container" id="codes"></div>
+        <h1>Fake Discord Nitro Generator</h1>
+        <div class="code-box" id="code">Click 'Generate' to get a code</div>
+        <button id="generate">Generate Code</button>
+        <button id="copy" class="hidden">Copy Code</button>
+        <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+        <p class="cooldown hidden" id="cooldown">Please wait before generating another code...</p>
+        <p>Codes Generated: <span id="counter">0</span></p>
     </div>
-
-    <!-- Copy Notification -->
-    <div class="notification" id="notification">Copied to clipboard! ✅</div>
-
-    <footer>🔥 Made for fun | Not real Nitro codes 🔥</footer>
-
-    <audio id="copySound" src="https://www.myinstants.com/media/sounds/button-click.mp3"></audio>
-
     <script>
-        function generateNitroCode() {
-            let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            let code = "";
-            for (let i = 0; i < 16; i++) {
-                code += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            return "https://discord.gift/" + code;
-        }
+        let cooldown = false;
+        let counter = 0;
+        const generateBtn = document.getElementById("generate");
+        const copyBtn = document.getElementById("copy");
+        const codeBox = document.getElementById("code");
+        const progressBar = document.getElementById("progress-bar");
+        const cooldownText = document.getElementById("cooldown");
+        const counterDisplay = document.getElementById("counter");
 
-        function generateCodes() {
-            let codesDiv = document.getElementById("codes");
-            codesDiv.innerHTML = "";  
-            for (let i = 0; i < 5; i++) {
-                let code = generateNitroCode();
-                let div = document.createElement("div");
-                div.className = "code";
-                div.innerHTML = `<span>${code}</span> <button class="copy-btn" onclick="copyCode('${code}')">📋 Copy</button>`;
-                codesDiv.appendChild(div);
-            }
-        }
-
-        function copyCode(code) {
-            navigator.clipboard.writeText(code);
-            document.getElementById("copySound").play();
-            showNotification();
-        }
-
-        function showNotification() {
-            let notification = document.getElementById("notification");
-            notification.style.display = "block";
+        function generateCode() {
+            if (cooldown) return;
+            cooldown = true;
+            progressBar.style.width = "100%";
             setTimeout(() => {
-                notification.style.display = "none";
-            }, 2000);
+                const code = `https://discord.gift/${randomCode()}`;
+                codeBox.textContent = code;
+                copyBtn.classList.remove("hidden");
+                counter++;
+                counterDisplay.textContent = counter;
+                cooldown = false;
+                progressBar.style.width = "0%";
+            }, 3000);
+            cooldownText.classList.remove("hidden");
+            setTimeout(() => cooldownText.classList.add("hidden"), 3000);
         }
-    </script>
 
+        function randomCode() {
+            return `${randomSegment()}-${randomSegment()}-${randomSegment()}`;
+        }
+
+        function randomSegment() {
+            return Math.random().toString(36).substring(2, 7).toUpperCase();
+        }
+
+        function copyCode() {
+            navigator.clipboard.writeText(codeBox.textContent);
+            alert("Code copied to clipboard!");
+        }
+
+        generateBtn.addEventListener("click", generateCode);
+        copyBtn.addEventListener("click", copyCode);
+    </script>
 </body>
 </html>
